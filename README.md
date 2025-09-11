@@ -1,17 +1,39 @@
-# <Navn på action>
+# Prepare Scratch Pools
 
-<Beskrivelse av action>
+Github Action for preparing a pool.
+
+Requires the `sfp` cli from Flxbl in order to run.
 
 ## Usage
 
 <!-- Start usage -->
 ```yaml
-- uses: navikt/<reponame>@<tag/sha>
+- uses: navikt/sf-gha-prepare-pool@<tag/sha>
     with:
-        # Description of input parameter
-        # Required: true/false
-        # Default: ''
-        input-parameter: ''
+        # The alias of the Dev Hub org
+        # Required: true
+        dev-hub:
+        
+        # The path to sfdx-project.json
+        # Required: false
+        sfdx-project-path:
+        
+        # The key of the packages to install
+        # Required: false
+        package-key:
+        
+        # The path to the pool configuration file
+        # Required: true
+        pool-config-path:
+        
+        # Whether this is a CI pool
+        # Required: false
+        # Default: "false"
+        is-ci-pool:
+
+        # The tag of the pool to manage
+        # Required: true
+        pool-tag:
 ```
 <!-- end usage -->
 
