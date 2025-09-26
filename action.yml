@@ -13,6 +13,10 @@ inputs:
   pool-config-path:
     description: The path to the pool configuration file
     required: true
+  sfp-log-level:
+    description: The log level for sfp commands
+    default: "INFO"
+    required: false
 
 runs:
   using: "composite"
@@ -42,5 +46,6 @@ runs:
         SFDX_PROJECT_PATH: ${{ inputs.sfdx-project-path }}
         POOL_CONFIG_PATH: ${{ inputs.pool-config-path }}
         DEV_HUB: ${{ inputs.dev-hub }}
+        LOG_LEVEL: ${{ inputs.sfp-log-level }}
       run: |
         bash "$GITHUB_ACTION_PATH/scripts/prepare_pool.sh"

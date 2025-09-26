@@ -33,7 +33,7 @@ if [ ! -f "$POOL_CONFIG_PATH" ]; then
 fi
 
 # Prepare Pool (conditionally add --keys)
-args=(pool prepare --poolconfig "$POOL_CONFIG_PATH" --targetdevhubusername "$DEV_HUB")
+args=(pool prepare --poolconfig "$POOL_CONFIG_PATH" --targetdevhubusername "$DEV_HUB" --loglevel "$LOG_LEVEL")
 if [ -n "${CRM_PACKAGE_KEY_PAIRS:-}" ]; then
   echo "::notice title=Package Keys::Using provided package keys"
   args+=(--keys "$CRM_PACKAGE_KEY_PAIRS")

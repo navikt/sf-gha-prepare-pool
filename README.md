@@ -1,8 +1,8 @@
 # Prepare Scratch Pools
 
-Github Action for preparing a pool.
+GitHub Action for preparing a pool.
 
-Requires the `sfp` cli from Flxbl in order to run.
+Requires the `sfp` CLI from Flxbl in order to run.
 
 ## Usage
 
@@ -12,19 +12,24 @@ Requires the `sfp` cli from Flxbl in order to run.
     with:
         # The alias of the Dev Hub org
         # Required: true
-        dev-hub:
+        dev-hub: ''
         
         # The path to sfdx-project.json
         # Required: false
-        sfdx-project-path:
+        sfdx-project-path: ''
         
         # The key of the packages to install
         # Required: false
-        package-key:
+        package-key: ''
         
         # The path to the pool configuration file
         # Required: true
-        pool-config-path:
+        pool-config-path: ''
+
+        # The log level for sfp commands
+        # Required: false
+        # Default: INFO
+        sfp-log-level: ''
 ```
 <!-- end usage -->
 
@@ -34,4 +39,4 @@ Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på Git
 
 ## For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen #platforce.
+Interne henvendelser kan sendes via Slack i kanalen #Platforce.
