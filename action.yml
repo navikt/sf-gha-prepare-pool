@@ -23,7 +23,7 @@ runs:
         DEV_HUB: ${{ inputs.dev-hub }}
       run: bash "$GITHUB_ACTION_PATH/scripts/check_scratch_limits.sh"
 
-    - uses: navikt/crm-workflows-base/.github/actions/createPackageKeyPairs.yml@main
+    - uses: navikt/crm-workflows-base/.github/actions/createPackageKeyPairs@main
       if: ${{ inputs.package-key != '' }}
       with:
         sfdx-project-path: ${{ inputs.sfdx-project-path }}
