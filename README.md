@@ -25,15 +25,6 @@ Requires the `sfp` cli from Flxbl in order to run.
         # The path to the pool configuration file
         # Required: true
         pool-config-path:
-        
-        # Whether this is a CI pool
-        # Required: false
-        # Default: "false"
-        is-ci-pool:
-
-        # The tag of the pool to manage
-        # Required: true
-        pool-tag:
 ```
 <!-- end usage -->
 

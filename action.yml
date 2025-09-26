@@ -13,13 +13,6 @@ inputs:
   pool-config-path:
     description: The path to the pool configuration file
     required: true
-  is-ci-pool:
-    description: Whether this is a CI pool
-    required: false
-    default: "false"
-  pool-tag:
-    description: The tag of the pool to manage
-    required: true
 
 runs:
   using: "composite"
@@ -30,11 +23,24 @@ runs:
         DEV_HUB: ${{ inputs.dev-hub }}
       run: bash "$GITHUB_ACTION_PATH/scripts/check_scratch_limits.sh"
 
-    - name: Prepare pool
-      shell: bash
+    - uses: navikt/crm-workflows-base/.github/actions/createPackageKeyPairs.yml@main
+      if: ${{ inputs.package-key != '' }}
+      with:
+        sfdx-project-path: ${{ inputs.sfdx-project-path }}
+        package-key: ${{ inputs.package-key }}
+      id: createPackageKeyPairs
       env:
         CRM_PACKAGE_KEY: ${{ inputs.package-key }}
         SFDX_PROJECT_PATH: ${{ inputs.sfdx-project-path }}
+        DEV_HUB: ${{ inputs.dev-hub }}
+
+    - name: Prepare pool
+      shell: bash
+      env:
+        # Access outputs from previous step must use steps.<id>.outputs syntax
+        CRM_PACKAGE_KEY_PAIRS: ${{ steps.createPackageKeyPairs.outputs.package-keys }}
+        SFDX_PROJECT_PATH: ${{ inputs.sfdx-project-path }}
         POOL_CONFIG_PATH: ${{ inputs.pool-config-path }}
         DEV_HUB: ${{ inputs.dev-hub }}
-      run: bash "$GITHUB_ACTION_PATH/scripts/prepare_pool.sh"
+      run: |
+        bash "$GITHUB_ACTION_PATH/scripts/prepare_pool.sh"

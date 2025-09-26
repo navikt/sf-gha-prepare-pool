@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Dependencies
-for cmd in sfp jq; do
+for cmd in sfp; do
   command -v "$cmd" >/dev/null || {
     echo "::error title=Missing dependency::'$cmd' is not installed or not on PATH"
     exit 1
@@ -32,35 +32,13 @@ if [ ! -f "$POOL_CONFIG_PATH" ]; then
   exit 1
 fi
 
-keys=""
-
-if [ -n "${CRM_PACKAGE_KEY:-}" ]; then
-  echo "::add-mask::$CRM_PACKAGE_KEY"
-  
-  # Read package aliases robustly (0+ results)
-  mapfile -t packageNames < <(jq -r '(.packageAliases // {}) | keys[]?' "$SFDX_PROJECT_PATH") || {
-    echo "::error title=JQ Error::Failed to read packageAliases from $SFDX_PROJECT_PATH"
-    exit 1
-  }
-
-  pairs=()
-  for p in "${packageNames[@]}"; do
-    pairs+=("$p:$CRM_PACKAGE_KEY")
-  done
-
-  if ((${#pairs[@]} > 0)); then
-    printf -v keys '%s ' "${pairs[@]}"
-    keys=${keys% }  # trim trailing space
-  fi
-
-else
-  echo "::notice No package key found, dropping key pair creation"
-fi
-
 # Prepare Pool (conditionally add --keys)
 args=(pool prepare --poolconfig "$POOL_CONFIG_PATH" --targetdevhubusername "$DEV_HUB")
-if [ -n "$keys" ]; then
-  args+=(--keys "$keys")
+if [ -n "${CRM_PACKAGE_KEY_PAIRS:-}" ]; then
+  echo "::notice title=Package Keys::Using provided package keys"
+  args+=(--keys "$CRM_PACKAGE_KEY_PAIRS")
+else
+  echo "::notice title=Package Keys::No package keys provided; proceeding without --keys"
 fi
 
 sfp "${args[@]}"
