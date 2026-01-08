@@ -32,6 +32,7 @@ runs:
       with:
         sfdx-project-path: ${{ inputs.sfdx-project-path }}
         package-key: ${{ inputs.package-key }}
+        devhub-alias: ${{ inputs.dev-hub }}
       id: createPackageKeyPairs
       env:
         CRM_PACKAGE_KEY: ${{ inputs.package-key }}
