@@ -27,7 +27,7 @@ runs:
         DEV_HUB: ${{ inputs.dev-hub }}
       run: bash "$GITHUB_ACTION_PATH/scripts/check_scratch_limits.sh"
 
-    - uses: navikt/sf-gha-create-package-key-pairs@17dc6431346c08baddb200f7a7bc91d81159a285
+    - uses: navikt/sf-gha-create-package-key-pairs@3e0bfd90f04c59796a909987e2b82d5c737da501
       if: ${{ inputs.package-key != '' }}
       with:
         sfdx-project-path: ${{ inputs.sfdx-project-path }}
